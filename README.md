@@ -28,7 +28,9 @@ council_of_experts/
 │   │   ├── scan-bug-council-candidates.sh
 │   │   ├── check-council-sweep-counts.sh
 │   │   ├── check-remediation-baseline.sh
-│   │   └── check-council-negative-space.sh
+│   │   ├── check-council-negative-space.sh
+│   │   ├── run-bug-council-all-phases.sh
+│   │   └── check-bug-council-all-phases.sh
 │   ├── docs/                       # process docs, drop-in
 │   │   ├── bug-council-phases.md
 │   │   ├── bug-council-scan-registry.md
@@ -53,15 +55,15 @@ council_of_experts/
 
 The council is intentionally not a package. Adapting it forces you to name your own boundaries, which is half the value.
 
-1. Copy `templates/scripts/*` into `your-repo/scripts/`. Adapt the regex patterns in `scan-bug-council-candidates.sh` to your language and project layout. Keep the four-script structure: scanner, sweep-count drift gate, remediation baseline, negative-space gate.
+1. Copy `templates/scripts/*` into `your-repo/scripts/`. Adapt the regex patterns in `scan-bug-council-candidates.sh` and project-specific commands in `run-bug-council-all-phases.sh` to your language and project layout. Keep the six-script structure: scanner, sweep-count drift gate, remediation baseline, negative-space gate, all-phases runner, and all-phases registration gate.
 2. Copy `templates/docs/*` into `your-repo/docs/dev/` (or wherever your dev docs live). The schema, sibling-search, and behavior-pinning docs are language-agnostic and drop in unchanged. The phases, registry, ledger, and negative-space docs need a first pass to reflect your codebase.
 3. Decide if you need a Roslyn analyzer (only for .NET). If yes, copy `templates/analyzers/csharp/` into `your-repo/analyzers/`, reference it from your runtime project as `OutputItemType="Analyzer" ReferenceOutputAssembly="false"`, and keep the calibration project in CI.
-4. Wire the four scripts into CI. The order matters: scanner is informational, the other three are gates.
+4. Wire `run-bug-council-all-phases.sh` into CI or your agent handoff command, and wire `check-bug-council-all-phases.sh` into `check-remediation-baseline.sh`. The scanner is informational; the all-phases runner is the council cycle.
 5. Add the **negative-space boundaries** for your code. This is the single most valuable per-repo step — the rest of the council does nothing if you have not declared what your trust boundaries are.
 
 ## Workflow per sweep
 
-1. Run `scan-bug-council-candidates.sh` to refresh the candidate inventory.
+1. Run `run-bug-council-all-phases.sh` to refresh candidate inventory and execute every council phase in one command.
 2. Pick one scan section. Open a new dated sweep register in `docs/dev/bug-council-sweep-<YYYY-MM-DD>-<topic>.md`.
 3. Convert the section into a table; add severity/confidence per `bug-council-severity-schema.md`.
 4. For each row, classify as `Accepted`, `Existing guard`, `False positive`, or `Out of scope`.

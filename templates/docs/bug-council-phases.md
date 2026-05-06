@@ -11,13 +11,14 @@ Copy into `docs/dev/bug-council-phases.md` when a multi-phase council upgrade is
 | 5 | Add second semantic lens | _Pending / In progress / Done_ | _agent_ | A second lens catches a distinct bug shape so zero-finding runs are less dependent on one narrow detector. |
 | 6 | Mutation/calibration fixture | _Pending / In progress / Done_ | _agent_ | Dedicated fixture project/corpus contains known-bad and known-good examples for every semantic lens. |
 | 7 | Multi-seed adversarial corpus | _Pending / In progress / Done_ | _agent_ | Fuzz harness runs multiple deterministic seeds plus explicit hostile corpus inputs; baseline gates the corpus and seed list. |
-| 8 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
+| 8 | All-phases council runner | _Pending / In progress / Done_ | _agent_ | `scripts/run-bug-council-all-phases.sh` runs inventory, remediation, sweep-count drift, negative-space, semantic analyzers, calibration, fuzz/adversarial corpus, and pending-phase checks in one command; `scripts/check-bug-council-all-phases.sh` is wired into remediation. |
+| 9 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
 
 ## How to resume
 
 1. Read recent commit messages prefixed `council:` to see what landed.
 2. Read this file's phase table to find the first non-Done row.
-3. Run `bash scripts/check-remediation-baseline.sh` and `bash scripts/check-council-sweep-counts.sh` to confirm a green baseline.
+3. Run `bash scripts/run-bug-council-all-phases.sh`; do not substitute a single remediation gate for a council cycle.
 4. Pick up the phase, update its status to In Progress, and follow its exit checklist.
 
 If a phase has been partially completed by another agent, treat the on-disk artifacts as the source of truth and reconcile this tracker against them rather than re-doing work.

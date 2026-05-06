@@ -71,6 +71,15 @@ require_file "docs/dev/bug-council-behavior-pinning.md" "council behavior-pinnin
 require_file "scripts/scan-bug-council-candidates.sh" "candidate scanner exists"
 require_file "scripts/check-council-sweep-counts.sh" "sweep-count drift gate exists"
 require_file "scripts/check-council-negative-space.sh" "negative-space gate script exists"
+require_file "scripts/run-bug-council-all-phases.sh" "all-phases council runner exists"
+require_file "scripts/check-bug-council-all-phases.sh" "all-phases council runner registration gate exists"
+
+# === All-phases runner registration =======================================
+if bash scripts/check-bug-council-all-phases.sh >/dev/null 2>&1; then
+  pass "all-phases council runner is registered"
+else
+  fail "all-phases council runner is not registered; run scripts/check-bug-council-all-phases.sh for details"
+fi
 
 # === Negative-space gate ===================================================
 if bash scripts/check-council-negative-space.sh >/dev/null 2>&1; then
