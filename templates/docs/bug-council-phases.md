@@ -7,7 +7,11 @@ Copy into `docs/dev/bug-council-phases.md` when a multi-phase council upgrade is
 | 1 | Council process upgrades | _Pending / In progress / Done_ | _agent_ | Severity/confidence schema added, sibling-search rule documented, negative-space gate doc + script, behavior-pinning pattern documented. |
 | 2 | Semantic analyzer beachhead | _Pending / In progress / Done_ | _agent_ | One language-appropriate semantic analyzer (Roslyn / Clippy / ESLint) implementing a taint-to-allocation or taint-to-path lens, with tests. |
 | 3 | Adversarial fuzz harness | _Pending / In progress / Done_ | _agent_ | Roundtrip + adversarial-input property tests for protocol/parsing surfaces, gated by the baseline. |
-| 4 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
+| 4 | Broaden first semantic lens | _Pending / In progress / Done_ | _agent_ | First lens covers more than the first MVP source/sink pair; sources, sinks, and validators are documented and behavior-pinned. |
+| 5 | Add second semantic lens | _Pending / In progress / Done_ | _agent_ | A second lens catches a distinct bug shape so zero-finding runs are less dependent on one narrow detector. |
+| 6 | Mutation/calibration fixture | _Pending / In progress / Done_ | _agent_ | Dedicated fixture project/corpus contains known-bad and known-good examples for every semantic lens. |
+| 7 | Multi-seed adversarial corpus | _Pending / In progress / Done_ | _agent_ | Fuzz harness runs multiple deterministic seeds plus explicit hostile corpus inputs; baseline gates the corpus and seed list. |
+| 8 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
 
 ## How to resume
 

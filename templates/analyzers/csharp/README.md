@@ -1,6 +1,6 @@
 # Council Roslyn Analyzers — C# template
 
-A minimal Roslyn analyzer project demonstrating the **TaintToAllocation** lens (`CSL0001`). Copy this directory into `analyzers/` in your repo and rename the project as you like.
+A minimal Roslyn analyzer project demonstrating the **TaintToAllocation** lens (`CSL0001`). Copy this directory into `analyzers/` in your repo and rename the project as you like. Treat it as a beachhead: production councils should broaden the source/sink lists, add a second lens such as `CSL0002` (`TaintToLoopBound`), and add calibration tests before trusting zero-finding runs.
 
 ## What CSL0001 catches
 
@@ -35,6 +35,8 @@ dotnet test analyzers/CouncilAnalyzers.Tests/CouncilAnalyzers.Tests.csproj
 
 The tests use direct Roslyn compilation rather than the heavier `Microsoft.CodeAnalysis.Testing` framework, to keep the test project small.
 
+Add a separate calibration test project once the first lens is wired. It should compile intentionally bad snippets that must produce `CSL0001`/`CSL0002`, plus intentionally good snippets that route the same values through sanctioned validators and must stay silent. This answers the common "did we find zero bugs because the code is clean, or because the lens is too narrow?" question.
+
 ## Adding more lenses
 
-See `docs/dev/bug-council-roslyn-analyzers.md` (template) for the council's design rules: intra-procedural by default, enumerated allowlists, deterministic, and every lens must earn its keep over a sweep cycle.
+See `docs/dev/bug-council-roslyn-analyzers.md` (template) for the council's design rules: intra-procedural by default, enumerated allowlists, deterministic, calibrated, and every lens must earn its keep over a sweep cycle.

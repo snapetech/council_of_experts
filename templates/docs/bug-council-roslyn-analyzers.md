@@ -8,23 +8,27 @@ The council ships a small Roslyn analyzer project that runs against the runtime 
 
 - `analyzers/CouncilAnalyzers/CouncilAnalyzers.csproj` — `netstandard2.0`, references `Microsoft.CodeAnalysis.CSharp`. Not packaged. **Lives outside `src/`** so the runtime project's default `Compile` glob does not pick up its sources.
 - `analyzers/CouncilAnalyzers/*Analyzer.cs` — one file per lens.
+- `analyzers/CouncilAnalyzers/ProtocolTaintAnalysis.cs` — optional shared intra-procedural taint classifier when multiple lenses share the same source/validator model.
 - `analyzers/CouncilAnalyzers.Tests/` — analyzer unit tests using direct Roslyn compilation (lighter than `Microsoft.CodeAnalysis.Testing`).
+- `analyzers/CouncilAnalyzers.Calibration/` — optional mutation/calibration test project with intentionally bad and intentionally good snippets. Use this to prove a zero-finding run still means the lens can catch its target shape.
 - The runtime `.csproj` references the analyzer with `OutputItemType="Analyzer" ReferenceOutputAssembly="false"`.
 
 ## Lens table
 
 | ID | Name | Council severity | Description |
 | --- | --- | --- | --- |
-| CSL0001 | TaintToAllocation | High | Network-derived allocation size without a sanctioned validator. |
+| CSL0001 | TaintToAllocation | High | Network-derived allocation size without a sanctioned validator. Strong implementations cover arrays, `Array.CreateInstance`, stream/string-builder capacities, and common collection capacity constructors. |
+| CSL0002 | TaintToLoopBound | High | Network-derived loop bound without a sanctioned validator. This catches hostile counts that drive repeated work or repeated per-iteration allocations. |
 
 ## Adding a new lens
 
 1. Pick an ID in the `CSL00xx` range.
 2. Add the analyzer file to `analyzers/CouncilAnalyzers/`.
 3. Add positive and negative tests.
-4. Update the lens table.
-5. Add a `require_pattern` to `scripts/check-remediation-baseline.sh` asserting the diagnostic ID is in source.
-6. Build the runtime and confirm the lens does not fire on existing code. If it does, decide: accept the finding into a sweep register, or refine the lens.
+4. Add a calibration snippet that must fire, plus a sanctioned-validator snippet that must stay silent.
+5. Update the lens table.
+6. Add `require_pattern` checks to `scripts/check-remediation-baseline.sh` asserting the diagnostic ID and calibration corpus are in source.
+7. Build the runtime and confirm the lens does not fire on existing code. If it does, decide: accept the finding into a sweep register, or refine the lens.
 
 ## Design rules
 
@@ -32,3 +36,4 @@ The council ships a small Roslyn analyzer project that runs against the runtime 
 - **Sanctioned validators are an enumerated allowlist, not a heuristic.** Adding a name is a council-visible decision.
 - **Lenses must be deterministic.** Roslyn calls them on every build.
 - **Every lens earns its keep.** A lens that has never fired on a real bug after a full sweep cycle is a candidate for removal.
+- **Every lens is calibrated.** A zero-finding analyzer run is only credible when a deliberate mutation still fails in the calibration project.

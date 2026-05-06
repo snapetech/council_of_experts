@@ -13,7 +13,8 @@ The council is a small, opinionated process layered on top of a few language-agn
 | **Sibling-search rule** | When a fix lands, the same shape is swept across the codebase before the row is closed. |
 | **Negative-space gate** | Declares trust boundaries by name and asserts each one's required validator is in place — catches the boundary you forgot to think about. |
 | **Behavior-pinning pattern** | Every text-anchored fix gate has a paired behavior test, so a refactor that erases the guard fails in two places. |
-| **Roslyn analyzer template (.NET)** | Semantic taint-to-allocation lens; ports the highest-severity scan classes from regex to dataflow. |
+| **Roslyn analyzer template (.NET)** | Semantic taint-to-allocation and taint-to-loop-bound lens guidance; ports the highest-severity scan classes from regex to dataflow. |
+| **Calibration and fuzz templates** | Deliberate mutations, known-good validator paths, multi-seed adversarial corpora, and hostile boundary inputs that keep zero-finding runs honest. |
 | **Phase tracker** | Multi-phase upgrades are resumable across sessions and across agents. |
 
 ## Repository layout
@@ -35,11 +36,13 @@ council_of_experts/
 │   │   ├── bug-council-sibling-search.md
 │   │   ├── bug-council-negative-space.md
 │   │   ├── bug-council-behavior-pinning.md
+│   │   ├── bug-council-adversarial-fuzz.md
 │   │   ├── bug-burndown-ledger.md
 │   │   └── bug-council-roslyn-analyzers.md
 │   └── analyzers/csharp/           # Roslyn analyzer template
 │       ├── CouncilAnalyzers/
-│       └── CouncilAnalyzers.Tests/
+│       ├── CouncilAnalyzers.Tests/
+│       └── CouncilAnalyzers.Calibration/
 └── examples/                       # short worked examples per ecosystem
     ├── dotnet/
     ├── rust/
@@ -52,7 +55,7 @@ The council is intentionally not a package. Adapting it forces you to name your 
 
 1. Copy `templates/scripts/*` into `your-repo/scripts/`. Adapt the regex patterns in `scan-bug-council-candidates.sh` to your language and project layout. Keep the four-script structure: scanner, sweep-count drift gate, remediation baseline, negative-space gate.
 2. Copy `templates/docs/*` into `your-repo/docs/dev/` (or wherever your dev docs live). The schema, sibling-search, and behavior-pinning docs are language-agnostic and drop in unchanged. The phases, registry, ledger, and negative-space docs need a first pass to reflect your codebase.
-3. Decide if you need a Roslyn analyzer (only for .NET). If yes, copy `templates/analyzers/csharp/` into `your-repo/analyzers/` and reference it from your runtime project as `OutputItemType="Analyzer" ReferenceOutputAssembly="false"`.
+3. Decide if you need a Roslyn analyzer (only for .NET). If yes, copy `templates/analyzers/csharp/` into `your-repo/analyzers/`, reference it from your runtime project as `OutputItemType="Analyzer" ReferenceOutputAssembly="false"`, and keep the calibration project in CI.
 4. Wire the four scripts into CI. The order matters: scanner is informational, the other three are gates.
 5. Add the **negative-space boundaries** for your code. This is the single most valuable per-repo step — the rest of the council does nothing if you have not declared what your trust boundaries are.
 
