@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+.vs/
+.vscode/
+.idea/
+node_modules/
+target/
+.DS_Store
