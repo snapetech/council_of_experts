@@ -78,6 +78,7 @@ require_file "scripts/check-council-active-backlog.sh" "active backlog gate exis
 require_file "docs/dev/bug-council-active-backlog.md" "active backlog exists"
 require_pattern "not proof of no bugs" "scripts/run-council-active-bughunt.sh" "active bughunt runner states reports are not no-bug proofs"
 require_pattern "Every active-bughunt section must have a row" "docs/dev/bug-council-active-backlog.md" "active backlog documents section coverage rule"
+require_pattern "Do not mention council, bughunt, scanners, agents, or other discovery tooling in commit messages" "docs/dev/bug-council-active-backlog.md" "commit wording policy avoids discovery-tool names"
 require_pattern "check-council-active-backlog.sh" "scripts/run-bug-council-all-phases.sh" "all-phases runner checks active backlog"
 
 # === All-phases runner registration =======================================

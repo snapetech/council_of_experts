@@ -17,7 +17,7 @@ Copy into `docs/dev/bug-council-phases.md` when a multi-phase council upgrade is
 
 ## How to resume
 
-1. Read recent commit messages prefixed `council:` to see what landed.
+1. Read recent product/fix commits and the ledger to see what landed. Commit messages must describe the product change, not the discovery tool or process.
 2. Read this file's phase table to find the first non-Done row.
 3. Run `bash scripts/run-bug-council-all-phases.sh`; do not substitute a single remediation gate for a council cycle.
 4. Pick up the phase, update its status to In Progress, and follow its exit checklist.

@@ -20,6 +20,13 @@ Status meanings:
 - `False positive` - scanner shape is not a bug for the listed rationale.
 - `Out of scope` - candidate belongs outside this council.
 
+## Commit Wording
+
+Fix commits must describe the product change, bug class, or user-visible
+hardening. Do not mention council, bughunt, scanners, agents, or other discovery tooling in commit messages. The ledger and process docs can record
+how a bug was found; commit history should read as normal maintenance and fix
+history.
+
 | Section | Candidate count | Status | Current classification | Next action |
 | --- | ---: | --- | --- | --- |
 | `Example suspicious boundary` | 0 | Guarded | Replace this placeholder with a real active-bughunt section. | Keep the corresponding remediation or negative-space gate. |
