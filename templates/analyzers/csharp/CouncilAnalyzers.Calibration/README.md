@@ -11,4 +11,5 @@ Minimum corpus for a C# protocol council:
 
 - `CSL0001`: tainted reader value into `new T[n]`, `Array.CreateInstance`, `MemoryStream(int)`, and at least one collection capacity constructor.
 - `CSL0002`: tainted reader value as a `for` loop bound, including a reversed comparison (`count > i`).
+- Additional lenses should be batched when possible. Useful C# sink families include stream seek/skip/position, filesystem paths, timeout/delay values, endpoints/URIs, enum/status conversions, and slice/index bounds.
 - Validator negative cases for every sanctioned count/length validator.

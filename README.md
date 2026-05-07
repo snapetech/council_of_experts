@@ -13,7 +13,7 @@ The council is a small, opinionated process layered on top of a few language-agn
 | **Sibling-search rule** | When a fix lands, the same shape is swept across the codebase before the row is closed. |
 | **Negative-space gate** | Declares trust boundaries by name and asserts each one's required validator is in place — catches the boundary you forgot to think about. |
 | **Behavior-pinning pattern** | Every text-anchored fix gate has a paired behavior test, so a refactor that erases the guard fails in two places. |
-| **Roslyn analyzer template (.NET)** | Semantic taint-to-allocation and taint-to-loop-bound lens guidance; ports the highest-severity scan classes from regex to dataflow. |
+| **Roslyn analyzer template (.NET)** | Semantic taint lens guidance for allocation, loop-bound, stream-position, file-path, timeout, endpoint, enum/status, and slice-bound sink families; ports high-severity scan classes from regex to dataflow. |
 | **Calibration and fuzz templates** | Deliberate mutations, known-good validator paths, multi-seed adversarial corpora, and hostile boundary inputs that keep zero-finding runs honest. |
 | **Phase tracker** | Multi-phase upgrades are resumable across sessions and across agents. |
 
