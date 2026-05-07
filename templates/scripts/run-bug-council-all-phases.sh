@@ -23,6 +23,7 @@ bash scripts/run-council-active-bughunt.sh
 
 printf '\n==> Process and regression gates\n'
 bash scripts/check-remediation-baseline.sh
+bash scripts/check-council-active-backlog.sh
 bash scripts/check-council-sweep-counts.sh
 bash scripts/check-council-negative-space.sh
 
@@ -45,3 +46,4 @@ if rg -n '^\| [0-9]+ \| .* \| Pending \|' docs/dev/bug-council-phases.md; then
 fi
 
 printf '\nAll bug council phases passed. Candidate counts saved to %s.\n' "$scan_out"
+printf 'Council verdict boundary: this is not proof of no bugs. It means the current calibrated lenses, active backlog, closed sweep counts, fuzz corpus, build, and vulnerability scan passed.\n'

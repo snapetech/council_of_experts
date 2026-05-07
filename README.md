@@ -30,6 +30,7 @@ council_of_experts/
 │   │   ├── check-council-sweep-counts.sh
 │   │   ├── check-remediation-baseline.sh
 │   │   ├── check-council-negative-space.sh
+│   │   ├── check-council-active-backlog.sh
 │   │   ├── run-bug-council-all-phases.sh
 │   │   └── check-bug-council-all-phases.sh
 │   ├── docs/                       # process docs, drop-in
@@ -39,6 +40,7 @@ council_of_experts/
 │   │   ├── bug-council-sibling-search.md
 │   │   ├── bug-council-negative-space.md
 │   │   ├── bug-council-behavior-pinning.md
+│   │   ├── bug-council-active-backlog.md
 │   │   ├── bug-council-adversarial-fuzz.md
 │   │   ├── bug-burndown-ledger.md
 │   │   └── bug-council-roslyn-analyzers.md
@@ -56,7 +58,7 @@ council_of_experts/
 
 The council is intentionally not a package. Adapting it forces you to name your own boundaries, which is half the value.
 
-1. Copy `templates/scripts/*` into `your-repo/scripts/`. Adapt the regex patterns in `scan-bug-council-candidates.sh`, suspicious-shape queues in `run-council-active-bughunt.sh`, and project-specific commands in `run-bug-council-all-phases.sh` to your language and project layout. Keep the seven-script structure: scanner, active bughunt queue, sweep-count drift gate, remediation baseline, negative-space gate, all-phases runner, and all-phases registration gate.
+1. Copy `templates/scripts/*` into `your-repo/scripts/`. Adapt the regex patterns in `scan-bug-council-candidates.sh`, suspicious-shape queues in `run-council-active-bughunt.sh`, and project-specific commands in `run-bug-council-all-phases.sh` to your language and project layout. Keep the eight-script structure: scanner, active bughunt queue, active backlog gate, sweep-count drift gate, remediation baseline, negative-space gate, all-phases runner, and all-phases registration gate.
 2. Copy `templates/docs/*` into `your-repo/docs/dev/` (or wherever your dev docs live). The schema, sibling-search, and behavior-pinning docs are language-agnostic and drop in unchanged. The phases, registry, ledger, and negative-space docs need a first pass to reflect your codebase.
 3. Decide if you need a Roslyn analyzer (only for .NET). If yes, copy `templates/analyzers/csharp/` into `your-repo/analyzers/`, reference it from your runtime project as `OutputItemType="Analyzer" ReferenceOutputAssembly="false"`, and keep the calibration project in CI.
 4. Wire `run-bug-council-all-phases.sh` into CI or your agent handoff command, and wire `check-bug-council-all-phases.sh` into `check-remediation-baseline.sh`. The scanner is informational; the all-phases runner is the council cycle.
@@ -64,13 +66,13 @@ The council is intentionally not a package. Adapting it forces you to name your 
 
 ## Workflow per sweep
 
-1. Run `run-bug-council-all-phases.sh` to refresh candidate inventory, refresh the active bughunt queue, and execute every council phase in one command.
-2. Pick one scan section. Open a new dated sweep register in `docs/dev/bug-council-sweep-<YYYY-MM-DD>-<topic>.md`.
+1. Run `run-bug-council-all-phases.sh` to refresh candidate inventory, refresh the active bughunt queue, refresh the active backlog gate, and execute every council phase in one command.
+2. Pick one active backlog pile or scan section. Open a new dated sweep register in `docs/dev/bug-council-sweep-<YYYY-MM-DD>-<topic>.md`.
 3. Convert the section into a table; add severity/confidence per `bug-council-severity-schema.md`.
 4. For each row, classify as `Accepted`, `Existing guard`, `False positive`, or `Out of scope`.
 5. For each `Accepted`, fix it, run the sibling search, write a behavior test.
 6. Add a `require_pattern` and behavior test to the remediation baseline.
-7. Update sweep counts; both `check-council-sweep-counts.sh` and `check-remediation-baseline.sh` must stay green.
+7. Update sweep counts and active backlog rows; `check-council-active-backlog.sh`, `check-council-sweep-counts.sh`, and `check-remediation-baseline.sh` must stay green.
 8. Close the register only when every row is non-`Unclassified`.
 
 ## Why "council of experts"

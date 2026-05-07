@@ -8,6 +8,7 @@ Concrete worked example showing how the [slskNet.Runtime](https://github.com/sna
 scripts/
 ├── scan-bug-council-candidates.sh        # candidate scanner (noisy, informational)
 ├── run-council-active-bughunt.sh         # fresh suspicious-shape queue, not a proof
+├── check-council-active-backlog.sh       # active queue count/status gate
 ├── check-council-sweep-counts.sh         # sweep-count drift gate
 ├── check-remediation-baseline.sh         # presence + behavior + secret gate
 └── check-council-negative-space.sh       # boundary validator presence
@@ -19,6 +20,7 @@ docs/dev/
 ├── bug-council-sibling-search.md         # sibling-search rule
 ├── bug-council-negative-space.md         # boundary -> validator declarations
 ├── bug-council-behavior-pinning.md       # text-gate + behavior-test pattern
+├── bug-council-active-backlog.md         # current suspicious-shape piles
 ├── bug-council-roslyn-analyzers.md       # Roslyn lens authoring
 ├── bug-burndown-ledger.md                # accepted findings (RT-### IDs)
 └── bug-council-sweep-<date>-<topic>.md   # one register per sweep
@@ -55,6 +57,7 @@ The analyzer must live outside `src/` so the runtime's default `Compile` glob do
 ```sh
 bash scripts/check-remediation-baseline.sh
 bash scripts/run-council-active-bughunt.sh
+bash scripts/check-council-active-backlog.sh
 bash scripts/check-council-sweep-counts.sh
 dotnet test --filter Category=Fuzz              # multi-seed + hostile corpus
 dotnet test tests/Soulseek.CouncilAnalyzers.Tests
@@ -64,6 +67,6 @@ dotnet test                                   # the analyzer attaches automatica
 
 ## Reading the registers
 
-A closed sweep register names the scan section, records the candidate count with a classification marker (e.g. `Mutable public byte arrays and array properties: 12/12 classified`), tables every candidate with severity/confidence, and lists the sibling search the closing agent ran. The remediation baseline asserts the marker is present so a re-run of the scanner that finds new candidates breaks the gate.
+A closed sweep register names the active backlog pile or scan section, records the candidate count with a classification marker (e.g. `Mutable public byte arrays and array properties: 12/12 classified`), tables every candidate with severity/confidence, and lists the sibling search the closing agent ran. The remediation baseline asserts the marker is present so a re-run of the scanner that finds new candidates breaks the gate.
 
 The calibration project is what makes a zero-finding semantic run meaningful: it proves the lens still fires on deliberate mutations even when current production code is clean.
