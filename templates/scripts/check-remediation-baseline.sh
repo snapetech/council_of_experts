@@ -73,6 +73,8 @@ require_file "scripts/check-council-sweep-counts.sh" "sweep-count drift gate exi
 require_file "scripts/check-council-negative-space.sh" "negative-space gate script exists"
 require_file "scripts/run-bug-council-all-phases.sh" "all-phases council runner exists"
 require_file "scripts/check-bug-council-all-phases.sh" "all-phases council runner registration gate exists"
+require_file "scripts/run-council-active-bughunt.sh" "active bughunt runner exists"
+require_pattern "not proof of no bugs" "scripts/run-council-active-bughunt.sh" "active bughunt runner states reports are not no-bug proofs"
 
 # === All-phases runner registration =======================================
 if bash scripts/check-bug-council-all-phases.sh >/dev/null 2>&1; then

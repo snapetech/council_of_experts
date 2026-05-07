@@ -18,6 +18,9 @@ scan_out="$out_dir/latest-candidate-counts.md"
 printf '==> Fresh candidate inventory\n'
 bash scripts/scan-bug-council-candidates.sh | tee "$scan_out"
 
+printf '\n==> Active bughunt discovery queue\n'
+bash scripts/run-council-active-bughunt.sh
+
 printf '\n==> Process and regression gates\n'
 bash scripts/check-remediation-baseline.sh
 bash scripts/check-council-sweep-counts.sh

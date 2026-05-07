@@ -7,6 +7,7 @@ Concrete worked example showing how the [slskNet.Runtime](https://github.com/sna
 ```
 scripts/
 ├── scan-bug-council-candidates.sh        # candidate scanner (noisy, informational)
+├── run-council-active-bughunt.sh         # fresh suspicious-shape queue, not a proof
 ├── check-council-sweep-counts.sh         # sweep-count drift gate
 ├── check-remediation-baseline.sh         # presence + behavior + secret gate
 └── check-council-negative-space.sh       # boundary validator presence
@@ -53,6 +54,7 @@ The analyzer must live outside `src/` so the runtime's default `Compile` glob do
 
 ```sh
 bash scripts/check-remediation-baseline.sh
+bash scripts/run-council-active-bughunt.sh
 bash scripts/check-council-sweep-counts.sh
 dotnet test --filter Category=Fuzz              # multi-seed + hostile corpus
 dotnet test tests/Soulseek.CouncilAnalyzers.Tests
