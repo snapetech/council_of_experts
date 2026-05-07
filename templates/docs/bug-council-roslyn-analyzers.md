@@ -19,6 +19,7 @@ The council ships a small Roslyn analyzer project that runs against the runtime 
 | --- | --- | --- | --- |
 | CSL0001 | TaintToAllocation | High | Network-derived allocation size without a sanctioned validator. Strong implementations cover arrays, `Array.CreateInstance`, stream/string-builder capacities, and common collection capacity constructors. |
 | CSL0002 | TaintToLoopBound | High | Network-derived loop bound without a sanctioned validator. This catches hostile counts that drive repeated work or repeated per-iteration allocations. |
+| CSL0003 | TaintToStreamPosition | High | Network-derived stream position, parser seek, or skip count without a sanctioned validator. This catches hostile offsets that can desynchronize bounded frame parsing. |
 
 ## Adding a new lens
 

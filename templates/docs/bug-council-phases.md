@@ -13,7 +13,8 @@ Copy into `docs/dev/bug-council-phases.md` when a multi-phase council upgrade is
 | 7 | Multi-seed adversarial corpus | _Pending / In progress / Done_ | _agent_ | Fuzz harness runs multiple deterministic seeds plus explicit hostile corpus inputs; baseline gates the corpus and seed list. |
 | 8 | All-phases council runner | _Pending / In progress / Done_ | _agent_ | `scripts/run-bug-council-all-phases.sh` runs inventory, remediation, sweep-count drift, negative-space, semantic analyzers, calibration, fuzz/adversarial corpus, and pending-phase checks in one command; `scripts/check-bug-council-all-phases.sh` is wired into remediation. |
 | 9 | Active backlog pile gate | _Pending / In progress / Done_ | _agent_ | `docs/dev/bug-council-active-backlog.md` records every active-discovery pile with current count/status, `scripts/check-council-active-backlog.sh` fails on stale or untriaged rows, and the all-phases runner invokes the gate every cycle. |
-| 10 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
+| 10 | Additional semantic lens | _Pending / In progress / Done_ | _agent_ | Add a third distinct semantic lens, such as tainted protocol offsets flowing into stream seek/skip/position sinks, with unit tests and calibration. |
+| 11 | _project-specific phase_ | _Pending_ | _agent_ | _exit criteria_ |
 
 ## How to resume
 
