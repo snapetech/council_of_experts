@@ -25,6 +25,14 @@ The council ships a small Roslyn analyzer project that runs against the runtime 
 | CSL0006 | TaintToEndpoint | High | Network-derived address, endpoint, DNS, or URI component without sanctioned endpoint validation. |
 | CSL0007 | TaintToEnum | High | Network-derived enum/status conversion without defined-value validation. |
 | CSL0008 | TaintToStringSlice | High | Network-derived slice index or length without sanctioned range validation. |
+| CSL0009 | TaintToDiagnostic | High | Network-derived diagnostic/log text without log-line/control-character validation. Preserve operator-visible values while preventing forged-line/control-character injection. |
+| CSL0010 | TaintToMessageBuilder | High | Network-derived outbound protocol/message-builder values without outbound argument validation. |
+| CSL0011 | TaintToCacheKey | High | Network-derived cache, dictionary, or correlation keys without normalization/bounding. |
+| CSL0012 | TaintToCryptoTrust | High | Network-derived key/signature/trust material without explicit size/format verification. |
+| CSL0013 | TaintToDynamicExecution | High | Network-derived reflection, assembly loading, type lookup, or process input without allowlist validation. |
+| CSL0014 | TaintToParserRuntime | High | Network-derived regex, JSON, XML, or parser-runtime input without parser limits or timeout validation. |
+| CSL0015 | TaintToResourceCapacity | High | Network-derived concurrency/resource capacity values without sanctioned bounds. |
+| CSL0016 | TaintToBufferOperation | High | Network-derived buffer, stream, pool, or compression operation counts without sanctioned bounds. |
 
 ## Adding a new lens
 

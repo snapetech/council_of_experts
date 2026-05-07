@@ -30,7 +30,8 @@ analyzers/
     ├── Soulseek.CouncilAnalyzers.csproj  # netstandard2.0, runs as analyzer
     ├── ProtocolTaintAnalysis.cs          # shared taint classifier
     ├── TaintToAllocationAnalyzer.cs      # CSL0001
-    └── TaintToLoopBoundAnalyzer.cs       # CSL0002
+    ├── TaintToLoopBoundAnalyzer.cs       # CSL0002
+    └── AdditionalSemanticAnalyzers.cs    # CSL0003+ sink-family batches
 
 tests/
 ├── Soulseek.CouncilAnalyzers.Tests/       # positive/negative analyzer tests

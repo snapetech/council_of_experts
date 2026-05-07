@@ -1,6 +1,6 @@
 # Council Roslyn Analyzers — C# template
 
-A minimal Roslyn analyzer project demonstrating the **TaintToAllocation** lens (`CSL0001`). Copy this directory into `analyzers/` in your repo and rename the project as you like. Treat it as a beachhead: production councils should broaden the source/sink lists, add batches of distinct lenses such as loop-bound, stream-position, file-path, timeout, endpoint, enum/status, and slice-bound sinks, and add calibration tests before trusting zero-finding runs.
+A minimal Roslyn analyzer project demonstrating the **TaintToAllocation** lens (`CSL0001`). Copy this directory into `analyzers/` in your repo and rename the project as you like. Treat it as a beachhead: production councils should broaden the source/sink lists, add batches of distinct lenses such as loop-bound, stream-position, file-path, timeout, endpoint, enum/status, slice-bound, diagnostic/log-line, outbound message, cache-key, crypto-trust, dynamic-execution, parser-runtime, resource-capacity, and buffer-operation sinks, and add calibration tests before trusting zero-finding runs.
 
 ## What CSL0001 catches
 
