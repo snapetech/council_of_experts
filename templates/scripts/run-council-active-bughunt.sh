@@ -62,6 +62,11 @@ write_section \
   src tests examples
 
 write_section \
+  "Red-team abuse lens" \
+  '(token|secret|password|authorization|cookie|api[-_]?key|session|redirect|proxy|forwarded|path|filename|exec|spawn|shell|http://|https://)' \
+  src tests examples scripts docs
+
+write_section \
   "Public mutable ownership surfaces" \
   'public [^;\n=]*\[\][^{;\n]*(\{|=>|;)|public .*I(ReadOnly)?(Collection|List|Enumerable)<|params ' \
   src tests examples

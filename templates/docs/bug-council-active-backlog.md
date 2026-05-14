@@ -31,3 +31,4 @@ history.
 | --- | ---: | --- | --- | --- |
 | `Example suspicious boundary` | 0 | Guarded | Replace this placeholder with a real active-bughunt section. | Keep the corresponding remediation or negative-space gate. |
 | `Example broad queue` | 0 | Open | Replace this placeholder with a broad queue emitted by the active bughunt runner. | Split into narrower subgroups, classify every subgroup, and promote confirmed bug classes into the ledger. |
+| `Red-team abuse lens` | 0 | Open | Required recurring attacker-view review across secrets, identity, redirects, paths, process launch, and downgrade risks. | Turn accepted hypotheses into behavior tests plus remediation anchors; add preservation tests for normal functionality. |
